@@ -5,10 +5,10 @@ const BASE_URL = 'https://6814d0df225ff1af162a3433.mockapi.io/';
 
 axios.defaults.baseURL = BASE_URL;
 
-const createThunk = (action, fetchData) => {
+export const createThunk = (action, fetchData) => {
   return createAsyncThunk(action, async (body, thunkAPI) => {
     try {
-      const response = await fetchData(body);
+      const response = await fetchData(body, thunkAPI);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
