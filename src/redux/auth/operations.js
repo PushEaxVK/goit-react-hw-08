@@ -1,24 +1,22 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import contactsApi from '../../services/api';
+import { createThunk } from '../contacts/operations';
 
-const goitAPI = axios.create({
-  baseURL: 'https://connections-api.goit.global/',
-});
-
-export const register = createAsyncThunk(
-  'auth/register',
-  async (body, thunkAPI) => {
-    console.log('auth/register');
-  }
+export const register = createThunk('auth/register', async (body) =>
+  contactsApi.auth.signup(body)
 );
 
-export const login = createAsyncThunk('auth/login', async (body, thunkAPI) => {
-  console.log('auth/login');
-});
-
-export const refresh = createAsyncThunk(
-  'auth/refresh',
-  async (body, thunkAPI) => {
-    console.log('auth/refresh');
-  }
+export const login = createThunk('auth/login', async (body) =>
+  contactsApi.auth.login(body)
 );
+
+export const logout = createThunk('auth/logout', async () =>
+  contactsApi.auth.logout()
+);
+
+export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
+  const savedToken = thunkAPI.getState().auth.token;
+  if (!savedToken) {
+    return thunkAPI.rejectWithValue('Token is not exist!');
+  }
+  return contactsApi.auth.refresh({ savedToken });
+});
