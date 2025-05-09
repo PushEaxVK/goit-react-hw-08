@@ -1,4 +1,9 @@
 const AppBar = () => {
-  return <div></div>;
+  return (
+    <div>
+      <h1>App bar</h1>
+    </div>
+  );
 };
+
 export default AppBar;
