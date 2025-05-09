@@ -8,7 +8,13 @@ export const setAuthHeader = (token) => {
   goitAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
-export const goitSignup = async ({ name, email, password }) => {
+export const removeAuthHeader = () => {
+  goitAPI.defaults.headers.common.Authorization = ``;
+};
+
+// Auth API
+
+export const signup = async ({ name, email, password }) => {
   return await goitAPI.post('/users/signup', {
     name,
     email,
@@ -16,171 +22,94 @@ export const goitSignup = async ({ name, email, password }) => {
   });
 };
 
-export const goitLogin = async ({ email, password }) => {
+export const login = async ({ email, password }) => {
   return await goitAPI.post('/users/login', { email, password });
 };
 
-export const goitLogout = async () => {
+export const logout = async () => {
   return await goitAPI.post('/users/logout');
 };
 
-export const goitRefresh = async () => {
+export const refresh = async () => {
   return await goitAPI.get('/users/current');
 };
 
-// -----------------------------------------------------
+// contacts API
 
-const signupUser = {
-  url: '/users/signup',
-  method: 'POST',
-  requestBody: (name, email, password) => {
-    return {
-      name, //: 'Adrian Cross',
-      email, //: 'across@mail.com',
-      password, //: 'examplepwd12345',
-    };
-  },
-  responses: {
-    [201]: 'User created.',
-    [400]: 'User creation error.',
-    [500]: 'Server error.',
-  },
+export const contactsGetAll = async () => {
+  return await goitAPI.get('/contacts');
 };
 
-const loginUser = {
-  url: '/users/login',
-  method: 'POST',
-  requestBody: (email, password) => {
-    return {
-      email, //: 'string',
-      password, //: 'string',
-    };
-  },
-  responses: {
-    [200]: 'User is logged in.',
-    [400]: 'Login error.',
-  },
+export const contactsAddNew = async ({ name, number }) => {
+  return await goitAPI.post('/contacts', { name, number });
 };
 
-const logoutUser = {
-  url: '/users/logout',
-  method: 'POST',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  responses: {
-    [200]: 'The user is logged out.',
-    [401]: 'Missing header with authorization token.',
-    [500]: 'Server error.',
-  },
+export const contactsDeleteById = async ({ id }) => {
+  return await goitAPI.delete(`/contacts/${id}`);
 };
 
-const currentUser = {
-  url: '/users/current',
-  method: 'GET',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  responses: {
-    [200]: 'Information found.',
-    [401]: 'Missing header with authorization token.',
-  },
-};
-
-const allContacts = {
-  url: '/contacts',
-  method: 'GET',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  responses: {
-    [200]: 'Contacts found.',
-    [401]: 'Missing header with authorization token.',
-    [404]: 'There is no such user collection.',
-    [500]: 'Server error.',
-  },
-};
-
-const newContact = {
-  url: '/contacts',
-  method: 'POST',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  requestBody: (name, number) => {
-    return {
-      name, //: 'Jacob Mercer',
-      number, //: '761-23-96',
-    };
-  },
-  responses: {
-    [201]: 'The contact was successfully created.',
-    [400]: 'Error creating contact.',
-    [401]: 'Missing header with authorization token.',
-  },
-};
-
-const deleteContact = {
-  url: (contactId) => `/contacts/${contactId}`,
-  method: 'DELETE',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  responses: {
-    [200]: 'The contact was successfully deleted.',
-    [401]: 'Missing header with authorization token.',
-    [404]: 'There is no such user collection.',
-    [500]: 'Server error.',
-  },
-};
-
-const patchContact = {
-  url: (contactId) => `/contacts/${contactId}`,
-  method: 'PATCH',
-  headers: (token) => {
-    return {
-      Authorization: token,
-    };
-  },
-  requestBody: (name, number) => {
-    return {
-      name, //: 'Jacob Mercer',
-      number, //: '761-23-96',
-    };
-  },
-  responses: {
-    [200]: 'The contact was successfully updated.',
-    [400]: 'Contact update failed.',
-    [401]: 'Missing header with authorization token.',
-  },
+export const contactsPatch = async ({ id, name, number }) => {
+  return await goitAPI.patch(`/contacts/${id}`, { name, number });
 };
 
 const contactsApi = {
-  signup: {
-    signup: signupUser,
-    login: loginUser,
-    logout: logoutUser,
-    current: currentUser,
+  goitAPI,
+  setAuthHeader,
+  removeAuthHeader,
+  auth: {
+    signup,
+    login,
+    logout,
+    refresh,
   },
-  contact: {
-    all: allContacts,
-    new: newContact,
-    delete: deleteContact,
-    patch: patchContact,
+  contacts: {
+    contactsGetAll,
+    contactsAddNew,
+    contactsDeleteById,
+    contactsPatch,
+  },
+  responses: {
+    other: {
+      [401]: 'Missing header with authorization token.',
+      [500]: 'Server error.',
+    },
+    signup: {
+      [201]: 'User created.',
+      [400]: 'User creation error.',
+    },
+    login: {
+      [200]: 'User is logged in.',
+      [400]: 'Login error.',
+    },
+    logout: {
+      [200]: 'The user is logged out.',
+    },
+    refresh: {
+      [200]: 'Information found.',
+    },
+    contactsGetAll: {
+      [200]: 'Contacts found.',
+      [404]: 'There is no such user collection.',
+    },
+    contactsAddNew: {
+      [201]: 'The contact was successfully created.',
+      [400]: 'Error creating contact.',
+    },
+    contactsDeleteById: {
+      [200]: 'The contact was successfully deleted.',
+      [404]: 'There is no such user collection.',
+    },
+    contactsPatch: {
+      [200]: 'The contact was successfully updated.',
+      [400]: 'Contact update failed.',
+    },
   },
 };
 
 export default contactsApi;
+
+console.log(contactsApi);
+// -----------------------------------------------------
 
 // User{
 // id	string
