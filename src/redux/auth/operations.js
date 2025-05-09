@@ -18,7 +18,8 @@ export const refreshUser = createThunk('auth/refresh', async (_, thunkAPI) => {
   const savedToken = thunkAPI.getState().auth.token;
   if (!savedToken) {
     console.log('User is not logged in!');
-    return thunkAPI.rejectWithValue('Token is not exist!');
+    throw new Error('Token is not exist!');
   }
+
   return contactsApi.auth.refresh({ savedToken });
 });
