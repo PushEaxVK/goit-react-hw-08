@@ -15,22 +15,29 @@ export const removeAuthHeader = () => {
 // Auth API
 
 export const signup = async ({ name, email, password }) => {
-  return await goitAPI.post('/users/signup', {
+  const response = await goitAPI.post('/users/signup', {
     name,
     email,
     password,
   });
+  setAuthHeader(response.data.token);
+  return response;
 };
 
 export const login = async ({ email, password }) => {
-  return await goitAPI.post('/users/login', { email, password });
+  const response = await goitAPI.post('/users/login', { email, password });
+  setAuthHeader(response.data.token);
+  return response;
 };
 
 export const logout = async () => {
-  return await goitAPI.post('/users/logout');
+  const response = await goitAPI.post('/users/logout');
+  removeAuthHeader();
+  return response;
 };
 
-export const refresh = async () => {
+export const refresh = async ({ token }) => {
+  setAuthHeader(token);
   return await goitAPI.get('/users/current');
 };
 
