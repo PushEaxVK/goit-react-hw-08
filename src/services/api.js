@@ -1,3 +1,35 @@
+import axios from 'axios';
+
+export const goitAPI = axios.create({
+  baseURL: 'https://connections-api.goit.global/',
+});
+
+export const setAuthHeader = (token) => {
+  goitAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+export const goitSignup = async ({ name, email, password }) => {
+  return await goitAPI.post('/users/signup', {
+    name,
+    email,
+    password,
+  });
+};
+
+export const goitLogin = async ({ email, password }) => {
+  return await goitAPI.post('/users/login', { email, password });
+};
+
+export const goitLogout = async () => {
+  return await goitAPI.post('/users/logout');
+};
+
+export const goitRefresh = async () => {
+  return await goitAPI.get('/users/current');
+};
+
+// -----------------------------------------------------
+
 const signupUser = {
   url: '/users/signup',
   method: 'POST',
