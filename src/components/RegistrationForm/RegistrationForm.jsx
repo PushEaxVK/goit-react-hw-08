@@ -1,4 +1,56 @@
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import s from './RegistrationForm.module.css';
+
 const RegistrationForm = () => {
-  return <div></div>;
+  const initialValues = {
+    name: '',
+    email: '',
+    password: '',
+  };
+
+  const handleSubmit = (values, options) => {
+    console.log(values);
+    console.log(options);
+  };
+
+  return (
+    <div>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Form className={s.form}>
+          <label htmlFor="name" className={s.label}>
+            Username
+          </label>
+          <Field
+            name="name"
+            type="text"
+            placeholder="Username"
+            id="name"
+            className={s.input}
+          />
+          <label htmlFor="email" className={s.label}>
+            Email
+          </label>
+          <Field
+            name="email"
+            type="email"
+            placeholder="Email"
+            id="email"
+            className={s.input}
+          />
+          <label htmlFor="password" className={s.label}>
+            Username
+          </label>
+          <Field
+            name="password"
+            type="password"
+            placeholder="Password"
+            id="password"
+            className={s.inputLast}
+          />
+          <button type="submit">Register</button>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 export default RegistrationForm;

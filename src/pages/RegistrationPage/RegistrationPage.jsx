@@ -1,7 +1,11 @@
+import RegistrationForm from '../../components/RegistrationForm/RegistrationForm';
+import s from './RegistrationPage.module.css';
+
 const RegistrationPage = () => {
   return (
-    <div>
-      <h1>Registration Page</h1>
+    <div className={s.wrapper}>
+      <h1 className={s.title}>Registration Page</h1>
+      <RegistrationForm />
     </div>
   );
 };
