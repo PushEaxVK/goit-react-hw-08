@@ -1,4 +1,11 @@
-const Layout = () => {
-  return <div></div>;
+import AppBar from '../AppBar/AppBar';
+
+const Layout = ({ children }) => {
+  return (
+    <div>
+      <AppBar />
+      {children}
+    </div>
+  );
 };
 export default Layout;
