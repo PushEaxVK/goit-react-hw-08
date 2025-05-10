@@ -1,0 +1,16 @@
+.wrapper {
+  padding-top: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+}
+
+.field {
+  margin-bottom: 8px;
+}
