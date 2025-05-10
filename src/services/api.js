@@ -1,21 +1,43 @@
 import axios from 'axios';
 
-export const goitAPI = axios.create({
-  baseURL: 'https://connections-api.goit.global/',
-});
+axios.defaults.baseURL = 'https://connections-api.goit.global/';
+
+// let store = null;
+
+// export const injectStore = (_store) => {
+//   store = _store;
+// };
+
+// export const goitAPI = axios.create({
+//   baseURL: 'https://connections-api.goit.global/',
+// });
+
+// goitAPI.interceptors.request.use(
+//   (config) => {
+//     const token = store?.getState()?.auth?.token;
+//     console.log('Token: ', token);
+//     if (token) {
+//       config.headers.Authorization = `Bearer ${token}`;
+//     } else {
+//       delete config.headers.Authorization;
+//     }
+//     return config;
+//   },
+//   (error) => Promise.reject(error)
+// );
 
 export const setAuthHeader = (token) => {
-  goitAPI.defaults.headers.common.Authorization = `Bearer ${token}`;
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
 export const removeAuthHeader = () => {
-  goitAPI.defaults.headers.common.Authorization = ``;
+  axios.defaults.headers.common.Authorization = ``;
 };
 
 // Auth API
 
 export const signup = async ({ name, email, password }) => {
-  const response = await goitAPI.post('/users/signup', {
+  const response = await axios.post('/users/signup', {
     name,
     email,
     password,
@@ -25,44 +47,44 @@ export const signup = async ({ name, email, password }) => {
 };
 
 export const login = async ({ email, password }) => {
-  const response = await goitAPI.post('/users/login', { email, password });
+  const response = await axios.post('/users/login', { email, password });
   setAuthHeader(response.data.token);
   return response;
 };
 
 export const logout = async () => {
-  const response = await goitAPI.post('/users/logout');
+  const response = await axios.post('/users/logout');
   removeAuthHeader();
   return response;
 };
 
 export const refresh = async ({ token }) => {
   setAuthHeader(token);
-  return await goitAPI.get('/users/current');
+  return await axios.get('/users/current');
 };
 
 // contacts API
 
 export const contactsGetAll = async () => {
-  return await goitAPI.get('/contacts');
+  return await axios.get('/contacts');
 };
 
 export const contactsAddNew = async ({ name, number }) => {
-  return await goitAPI.post('/contacts', { name, number });
+  return await axios.post('/contacts', { name, number });
 };
 
 export const contactsDeleteById = async ({ id }) => {
-  return await goitAPI.delete(`/contacts/${id}`);
+  return await axios.delete(`/contacts/${id}`);
 };
 
 export const contactsPatch = async ({ id, name, number }) => {
-  return await goitAPI.patch(`/contacts/${id}`, { name, number });
+  return await axios.patch(`/contacts/${id}`, { name, number });
 };
 
 const contactsApi = {
-  goitAPI,
-  setAuthHeader,
-  removeAuthHeader,
+  axios,
+  // setAuthHeader,
+  // removeAuthHeader,
   auth: {
     signup,
     login,

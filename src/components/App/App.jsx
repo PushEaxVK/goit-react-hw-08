@@ -23,10 +23,6 @@ function App() {
   const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  useEffect(() => {
     dispatch(refreshUser());
   }, [dispatch]);
 

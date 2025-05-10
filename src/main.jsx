@@ -8,6 +8,9 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from './redux/store.js';
 import { BrowserRouter } from 'react-router-dom';
+// import { injectStore } from './services/api.js';
+
+// injectStore(store);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

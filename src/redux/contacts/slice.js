@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts } from './operations';
+import { logout } from '../auth/operations';
 
 const initialState = { items: [], isLoading: false, error: null };
 
@@ -38,7 +39,7 @@ const slice = createSlice({
   name: 'contacts',
   initialState,
   extraReducers: (builder) => {
-    buildCase(builder)
+    buildCase(builder.addCase(logout.fulfilled, () => initialState))
       .addCase(fetchContacts, (state, action) => {
         state.items = action.payload;
       })
