@@ -1,7 +1,11 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import s from './RegistrationForm.module.css';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/auth/operations';
 
 const RegistrationForm = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     name: '',
     email: '',
@@ -9,8 +13,8 @@ const RegistrationForm = () => {
   };
 
   const handleSubmit = (values, options) => {
-    console.log(values);
-    console.log(options);
+    dispatch(register(values));
+    options.resetForm();
   };
 
   return (

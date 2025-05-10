@@ -115,7 +115,6 @@ const contactsApi = {
 
 export default contactsApi;
 
-console.log(contactsApi);
 // -----------------------------------------------------
 
 // User{
