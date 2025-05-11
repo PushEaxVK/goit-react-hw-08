@@ -5,7 +5,6 @@ import { selectError, selectLoading } from '../../redux/contacts/selectors';
 import ContactList from '../../components/ContactList/ContactList';
 import { useEffect } from 'react';
 import { fetchContacts } from '../../redux/contacts/operations';
-import { Typography } from '@mui/material';
 
 const ContactsPage = () => {
   const isLoading = useSelector(selectLoading);
@@ -18,17 +17,6 @@ const ContactsPage = () => {
 
   return (
     <div>
-      <Typography
-        variant="h4"
-        align="center"
-        sx={{
-          mt: 2,
-          mb: 2,
-        }}
-      >
-        Contacts
-      </Typography>
-      {/* <h1>Phonebook</h1> */}
       <ContactForm />
       <SearchBox />
       {isLoading && !error && <b>Loading contacts...</b>}
