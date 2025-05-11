@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import s from './LoginForm.module.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../redux/auth/operations';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -14,33 +15,57 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={s.wrapper}>
+    <Box
+      sx={{
+        p: 4,
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: 'background.paper',
+      }}
+    >
+      <Typography variant="h5" component="h1" gutterBottom textAlign="center">
+        Log In to Your Account
+      </Typography>
+
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form className={s.form}>
-          <label htmlFor="email" className={s.label}>
-            Email
-          </label>
-          <Field
-            name="email"
-            type="email"
-            placeholder="Email"
-            id="email"
-            className={s.field}
-          />
-          <label htmlFor="password" className={s.label}>
-            Password
-          </label>
-          <Field
-            name="password"
-            type="password"
-            placeholder="Password"
-            id="password"
-            className={s.field}
-          />
-          <button type="submit">Login</button>
-        </Form>
+        {({ handleChange, handleBlur, values }) => (
+          <Form>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              Log In
+            </Button>
+          </Form>
+        )}
       </Formik>
-    </div>
+    </Box>
   );
 };
+
 export default LoginForm;
