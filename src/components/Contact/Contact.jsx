@@ -1,36 +1,49 @@
-import css from './Contact.module.css';
-import { FaUser } from 'react-icons/fa6';
-import { FaPhone } from 'react-icons/fa6';
 import { useDispatch } from 'react-redux';
 import { deleteContact } from '../../redux/contacts/operations';
+import { Box, IconButton, Stack, Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import PersonIcon from '@mui/icons-material/Person';
+import PhoneIcon from '@mui/icons-material/Phone';
 
 const Contact = ({ contact }) => {
   const dispatch = useDispatch();
 
-  const contactRemove = (contactId) => {
-    dispatch(deleteContact(contactId));
+  const handleRemove = () => {
+    dispatch(deleteContact(contact.id));
   };
 
   return (
-    <div className={css.contact}>
-      <div className={css.text}>
-        <p>
-          <FaUser className={css.icon} />
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        py: 1.5,
+        px: 2,
+        width: '100%',
+      }}
+    >
+      <Stack spacing={0.5}>
+        <Typography
+          variant="body1"
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          <PersonIcon sx={{ mr: 1, color: 'primary.main' }} />
           {contact.name}
-        </p>
-        <p>
-          <FaPhone className={css.icon} />
+        </Typography>
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ display: 'flex', alignItems: 'center' }}
+        >
+          <PhoneIcon sx={{ mr: 1, color: 'secondary.main' }} />
           {contact.number}
-        </p>
-      </div>
-      <button
-        type="button"
-        className={css.button}
-        onClick={() => contactRemove(contact.id)}
-      >
-        Delete
-      </button>
-    </div>
+        </Typography>
+      </Stack>
+      <IconButton onClick={handleRemove} aria-label={`Delete ${contact.name}`}>
+        <DeleteIcon />
+      </IconButton>
+    </Box>
   );
 };
 

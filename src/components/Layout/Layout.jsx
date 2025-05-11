@@ -1,12 +1,13 @@
 import { Container } from '@mui/material';
 import AppBar from '../AppBar/AppBar';
+import { Outlet } from 'react-router-dom';
 
-const Layout = ({ children }) => {
+const Layout = () => {
   return (
     <div>
       <AppBar />
       <Container maxWidth="md" sx={{ py: 6 }}>
-        {children}
+        <Outlet />
       </Container>
     </div>
   );

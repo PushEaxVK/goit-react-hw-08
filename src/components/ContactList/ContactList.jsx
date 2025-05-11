@@ -1,19 +1,24 @@
 import { useSelector } from 'react-redux';
 import Contact from '../Contact/Contact';
-import css from './ContactList.module.css';
 import { selectFilteredContacts } from '../../redux/contacts/selectors';
+import { Divider, List, ListItem } from '@mui/material';
 
 const ContactList = () => {
   const filteredContacts = useSelector(selectFilteredContacts);
 
   return (
-    <ul className={css.list}>
-      {filteredContacts.map((contact) => (
-        <li key={contact.id}>
+    <List sx={{ width: '100%', maxWidth: 600, mx: 'auto', mt: 3 }}>
+      {filteredContacts.map((contact, index) => (
+        <ListItem
+          key={contact.id}
+          disablePadding
+          sx={{ flexDirection: 'column', alignItems: 'stretch' }}
+        >
           <Contact contact={contact} />
-        </li>
+          {index < filteredContacts.length - 1 && <Divider />}
+        </ListItem>
       ))}
-    </ul>
+    </List>
   );
 };
 

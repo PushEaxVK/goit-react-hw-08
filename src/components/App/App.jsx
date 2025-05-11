@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from 'react-redux';
-import css from './App.module.css';
 import { useEffect, lazy, Suspense } from 'react';
 import { selectIsRefreshing } from '../../redux/auth/selectors';
 import { refreshUser } from '../../redux/auth/operations';
@@ -26,42 +25,37 @@ function App() {
   }, [dispatch]);
 
   return isRefreshing ? null : (
-    <div className={css.app}>
-      <Layout>
-        <Suspense fallback={null}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-              path="/register"
-              element={
-                <RestrictedRoute
-                  redirectTo="/contacts"
-                  component={<RegistrationPage />}
-                />
-              }
-            />
-            <Route
-              path="/login"
-              element={
-                <RestrictedRoute
-                  redirectTo="/contacts"
-                  component={<LoginPage />}
-                />
-              }
-            />
-            <Route
-              path="/contacts"
-              element={
-                <PrivateRoute
-                  redirectTo="/login"
-                  component={<ContactsPage />}
-                />
-              }
-            />
-          </Routes>
-        </Suspense>
-      </Layout>
-    </div>
+    <Suspense fallback={null}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegistrationPage />}
+              />
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 }
 

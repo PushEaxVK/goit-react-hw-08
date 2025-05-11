@@ -1,14 +1,12 @@
-import { Box, Container, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
+import { Box, Typography } from '@mui/material';
+import ContactsIcon from '@mui/icons-material/Contacts';
 
 const HomePage = () => {
-  const user = useSelector(selectUser);
-
   return (
     <Box textAlign="center">
-      <Typography variant="h3" gutterBottom>
-        📇 Welcome{user?.name ? `, ${user.name}` : ''}!
+      <Typography variant="h4" component="h1">
+        <ContactsIcon sx={{ color: 'primary.main' }} />
+        &nbsp;Contact Book
       </Typography>
 
       <Typography variant="h6" color="text.secondary" paragraph>

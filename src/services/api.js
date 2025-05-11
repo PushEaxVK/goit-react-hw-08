@@ -2,30 +2,6 @@ import axios from 'axios';
 
 axios.defaults.baseURL = 'https://connections-api.goit.global/';
 
-// let store = null;
-
-// export const injectStore = (_store) => {
-//   store = _store;
-// };
-
-// export const goitAPI = axios.create({
-//   baseURL: 'https://connections-api.goit.global/',
-// });
-
-// goitAPI.interceptors.request.use(
-//   (config) => {
-//     const token = store?.getState()?.auth?.token;
-//     console.log('Token: ', token);
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`;
-//     } else {
-//       delete config.headers.Authorization;
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error)
-// );
-
 export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
@@ -82,9 +58,6 @@ export const contactsPatch = async ({ id, name, number }) => {
 };
 
 const contactsApi = {
-  axios,
-  // setAuthHeader,
-  // removeAuthHeader,
   auth: {
     signup,
     login,
@@ -136,34 +109,3 @@ const contactsApi = {
 };
 
 export default contactsApi;
-
-// -----------------------------------------------------
-
-// User{
-// id	string
-// Backend-generated unique identifier.
-
-// name*	string
-// Username.
-
-// email*	string
-// E-mail address.
-
-// password*	string
-// Password.
-
-// }
-// example: OrderedMap { "name": "Adrian Cross", "email": "across@mail.com", "password": "examplepwd12345" }
-
-// Contact{
-// id	string
-// Backend-generated unique identifier.
-
-// name*	string
-// Contact name.
-
-// number*	string
-// Phone number of the contact.
-
-// }
-// example: OrderedMap { "name": "Jacob Mercer", "number": "761-23-96" }
