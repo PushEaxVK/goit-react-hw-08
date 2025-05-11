@@ -1,9 +1,19 @@
+import { Typography } from '@mui/material';
 import LoginForm from '../../components/LoginForm/LoginForm';
 
 const LoginPage = () => {
   return (
     <div>
-      <h1>Login Page</h1>
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          mt: 2,
+          mb: 2,
+        }}
+      >
+        Login
+      </Typography>
       <LoginForm />
     </div>
   );

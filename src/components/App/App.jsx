@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import css from './App.module.css';
 import { useEffect, lazy, Suspense } from 'react';
-import { fetchContacts } from '../../redux/contacts/operations';
 import { selectIsRefreshing } from '../../redux/auth/selectors';
 import { refreshUser } from '../../redux/auth/operations';
 import { Route, Routes } from 'react-router-dom';
