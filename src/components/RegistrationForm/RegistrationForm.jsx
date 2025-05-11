@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import s from './RegistrationForm.module.css';
 import { useDispatch } from 'react-redux';
 import { register } from '../../redux/auth/operations';
+import { Box, Button, TextField, Typography } from '@mui/material';
 
 const RegistrationForm = () => {
   const dispatch = useDispatch();
@@ -18,43 +18,65 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div>
+    <Box
+      sx={{
+        p: 4,
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: 'background.paper',
+      }}
+    >
+      <Typography variant="h5" component="h1" gutterBottom textAlign="center">
+        Register Your Account
+      </Typography>
+
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        <Form className={s.form}>
-          <label htmlFor="name" className={s.label}>
-            Username
-          </label>
-          <Field
-            name="name"
-            type="text"
-            placeholder="Username"
-            id="name"
-            className={s.input}
-          />
-          <label htmlFor="email" className={s.label}>
-            Email
-          </label>
-          <Field
-            name="email"
-            type="email"
-            placeholder="Email"
-            id="email"
-            className={s.input}
-          />
-          <label htmlFor="password" className={s.label}>
-            Username
-          </label>
-          <Field
-            name="password"
-            type="password"
-            placeholder="Password"
-            id="password"
-            className={s.inputLast}
-          />
-          <button type="submit">Register</button>
-        </Form>
+        {({ handleChange, handleBlur, values }) => (
+          <Form>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Username"
+              name="name"
+              type="text"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Email"
+              name="email"
+              type="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Password"
+              name="password"
+              type="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              fullWidth
+              sx={{ mt: 2 }}
+            >
+              Register
+            </Button>
+          </Form>
+        )}
       </Formik>
-    </div>
+    </Box>
   );
 };
+
 export default RegistrationForm;
